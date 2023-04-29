@@ -9,87 +9,87 @@ using P2_2018RR604_2020CD602_2019MZ602.Models;
 
 namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
 {
-    public class GenerosController : Controller
+    public class DepartamentosController : Controller
     {
         private readonly covidDbContext _context;
 
-        public GenerosController(covidDbContext context)
+        public DepartamentosController(covidDbContext context)
         {
             _context = context;
         }
 
-        // GET: Generos
+        // GET: Departamentos
         public async Task<IActionResult> Index()
         {
-              return _context.Generos != null ? 
-                          View(await _context.Generos.ToListAsync()) :
-                          Problem("Entity set 'covidDbContext.Generos'  is null.");
+              return _context.Departamentos != null ? 
+                          View(await _context.Departamentos.ToListAsync()) :
+                          Problem("Entity set 'covidDbContext.Departamentos'  is null.");
         }
 
-        // GET: Generos/Details/5
+        // GET: Departamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Generos == null)
+            if (id == null || _context.Departamentos == null)
             {
                 return NotFound();
             }
 
-            var generos = await _context.Generos
+            var departamentos = await _context.Departamentos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (generos == null)
+            if (departamentos == null)
             {
                 return NotFound();
             }
 
-            return View(generos);
+            return View(departamentos);
         }
 
-        // GET: Generos/Create
+        // GET: Departamentos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Generos/Create
+        // POST: Departamentos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombre")] Generos generos)
+        public async Task<IActionResult> Create([Bind("id,nombre")] Departamentos departamentos)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(generos);
+                _context.Add(departamentos);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(generos);
+            return View(departamentos);
         }
 
-        // GET: Generos/Edit/5
+        // GET: Departamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Generos == null)
+            if (id == null || _context.Departamentos == null)
             {
                 return NotFound();
             }
 
-            var generos = await _context.Generos.FindAsync(id);
-            if (generos == null)
+            var departamentos = await _context.Departamentos.FindAsync(id);
+            if (departamentos == null)
             {
                 return NotFound();
             }
-            return View(generos);
+            return View(departamentos);
         }
 
-        // POST: Generos/Edit/5
+        // POST: Departamentos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nombre")] Generos generos)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nombre")] Departamentos departamentos)
         {
-            if (id != generos.id)
+            if (id != departamentos.id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
             {
                 try
                 {
-                    _context.Update(generos);
+                    _context.Update(departamentos);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GenerosExists(generos.id))
+                    if (!DepartamentosExists(departamentos.id))
                     {
                         return NotFound();
                     }
@@ -114,49 +114,49 @@ namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(generos);
+            return View(departamentos);
         }
 
-        // GET: Generos/Delete/5
+        // GET: Departamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Generos == null)
+            if (id == null || _context.Departamentos == null)
             {
                 return NotFound();
             }
 
-            var generos = await _context.Generos
+            var departamentos = await _context.Departamentos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (generos == null)
+            if (departamentos == null)
             {
                 return NotFound();
             }
 
-            return View(generos);
+            return View(departamentos);
         }
 
-        // POST: Generos/Delete/5
+        // POST: Departamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Generos == null)
+            if (_context.Departamentos == null)
             {
-                return Problem("Entity set 'covidDbContext.Generos'  is null.");
+                return Problem("Entity set 'covidDbContext.Departamentos'  is null.");
             }
-            var generos = await _context.Generos.FindAsync(id);
-            if (generos != null)
+            var departamentos = await _context.Departamentos.FindAsync(id);
+            if (departamentos != null)
             {
-                _context.Generos.Remove(generos);
+                _context.Departamentos.Remove(departamentos);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenerosExists(int id)
+        private bool DepartamentosExists(int id)
         {
-          return (_context.Generos?.Any(e => e.id == id)).GetValueOrDefault();
+          return (_context.Departamentos?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

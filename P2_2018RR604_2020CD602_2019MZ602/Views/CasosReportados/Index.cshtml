@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="text-center">
+    <h1 class="display-4">Registro de Covid</h1>
+    <h3>El siguiente formulario es para llevar el registro de casos reportados de Covid por departamento y genero.</h3>
+</div>
+
+<h1>Reportar casos</h1>
+<br />
+<form>
+    @*Inicio del formulario*@
+    <form>
+        <div class="form-row row">
+            @Html.DropDownList("id",ViewData["listaDepartamentos"]as SelectList,"Seleccione un departamento", new {@class="form-control"})
+        </div>
+        <div class="form-row row">
+            @Html.DropDownList("id",ViewData["listaGenero"]as SelectList,"Seleccione un genero", new {@class="form-control"})
+        </div>
+
+        <div class="form-row row">
+            <div class="col-sm-4">
+                <label>Casos Confirmados</label>
+                @Html.TextBox("Confirmados","", new{@class="form-control"})
+            </div>
+
+            <div class="col-sm-4">
+                <label>Casos de Recuperados</label>
+                @Html.TextBox("Recuperados","", new{@class="form-control"})
+            </div>
+
+            <div class="col-sm-4">
+                <label>Casos de Fallecidos</label>
+                @Html.TextBox("Fallecidos","", new{@class="form-control"})
+            </div>
+        </div>
+        <div class="form-group row mb-4">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+                <input type="submit" class="btn btn-success btn-block" value="Guardar" />
+            </div>
+        </div>
+    </form>
+
+    @*fin del formulario*@
+</form>

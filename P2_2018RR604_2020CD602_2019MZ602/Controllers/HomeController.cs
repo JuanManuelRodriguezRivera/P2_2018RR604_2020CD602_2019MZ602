@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using P2_2018RR604_2020CD602_2019MZ602.Models;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
 {
@@ -8,6 +10,8 @@ namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
+         
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
