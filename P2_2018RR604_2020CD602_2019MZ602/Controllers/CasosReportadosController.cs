@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using P2_2018RR604_2020CD602_2019MZ602.Models;
 
@@ -8,95 +7,45 @@ namespace P2_2018RR604_2020CD602_2019MZ602.Controllers
     public class CasosReportadosController : Controller
     {
         private readonly covidDbContext _covidDbContext;
-
         public CasosReportadosController(covidDbContext covidDbContext)
         {
             _covidDbContext = covidDbContext;
         }
 
-
-        // GET: CasosReportadosController
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            var listadoDepartamentos = (from d in _covidDbContext.Departamentos select d).ToList();
+            var listadodepartamentos = (from d in _covidDbContext.Departamentos
+                                        select d).ToList();
 
-            ViewData["listadoDepartamentos"] = new SelectList(listadoDepartamentos, "id", "nombre");
+            ViewData["listadodepartamentos"] = new SelectList(listadodepartamentos, "id", "nombre");
 
-            var listadoGenero = (from g in _covidDbContext.Generos select g).ToList();
+            var listadogenero = (from g in _covidDbContext.Generos
+                                 select g).ToList();
 
-            ViewData["listadoGenero"] = new SelectList(listadoGenero, "id", "nombre");
+            ViewData["listadogenero"] = new SelectList(listadogenero, "id", "nombre");
+            var listadoCaso = (from c in _covidDbContext.CasosReportados
+            join d in _covidDbContext.Departamentos on c.departamento_id equals d.id
+                                 join g in _covidDbContext.Generos on c.genero_id equals g.id
+                                 select new
+                                 {
+                                     departamentos = d.nombre,
+                                     genero = g.nombre,
+                                     confirmados = c.confirmados,
+                                     recuperados = c.recuperados,
+                                     fallecidos = c.fallecidos,
 
+                                 }).ToList();
+            ViewData["listadoCaso"] = listadoCaso;
 
             return View();
-        }
 
-        // GET: CasosReportadosController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
-
-        // GET: CasosReportadosController/Create
-        public ActionResult Create()
+        public IActionResult CrearDatos(CasosReportados nuevoDato)
         {
-            return View();
-        }
-
-        // POST: CasosReportadosController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CasosReportadosController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CasosReportadosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CasosReportadosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CasosReportadosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _covidDbContext.Add(nuevoDato);
+            _covidDbContext.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
+
